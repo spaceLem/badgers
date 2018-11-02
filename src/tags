@@ -1,0 +1,44 @@
+Mmain.cpp	main.cpp	/^int main (int argc, char **argv) {$/
+Parameters	defs.hpp	/^struct Parameters {$/
+Rates	defs.hpp	/^struct Rates {$/
+Records	records.hpp	/^struct Records {$/
+add	utils.hpp	/^inline void add(ivec &C, ivec const &A, ivec const/
+birth	birth.cpp	/^void birth(ivec const &N, Rates &rates, bvec const/
+bvec	defs.hpp	/^typedef vector<bool> bvec;$/
+calc_nbhd	nbhd.cpp	/^void calc_nbhd(void) {$/
+calculate_bias	bias.cpp	/^void calculate_bias(void) {$/
+check	check.cpp	/^int check(ivec const &N, ivec const &S, ivec const/
+cumsum	utils.hpp	/^T cumsum(vector<T> const &A, vector<T> &B) {$/
+death	death.cpp	/^void death(ivec const &N, ivec const &I, Rates &ra/
+describe_event	details.cpp	/^void describe_event(int const last_event, int cons/
+describe_situation	details.cpp	/^void describe_situation(ivec const &S, ivec const /
+direction_t	defs.hpp	/^\/\/enum direction_t {UP, DOWN, LEFT, RIGHT};$/
+display	utils.hpp	/^void display(vector<T> const &A) {$/
+distance_kernel	distance_kernel.cpp	/^double distance_kernel(void) {$/
+div0	utils.hpp	/^double div0(S numer, T denom) {$/
+dvec	defs.hpp	/^typedef vector<double> dvec;$/
+for	cull.cpp	/^			for (int i = 0; i < num_groups; ++i) {$/
+fuzzyint	utils.hpp	/^inline int fuzzyint(T x) {$/
+get_nbhd	nbhd.hpp	/^inline int get_nbhd(int const x, int const i) { re/
+getwidth	utils.hpp	/^inline int getwidth(int t)	{ return 2; }$/
+group	pick_to.hpp	/^\/\/ given from-group (x, y), pick a possible to-g/
+iceil	utils.hpp	/^inline int iceil(T x) {$/
+if	cull.cpp	/^				if (P.details >= 2) {$/
+ifloor	utils.hpp	/^inline int ifloor(T x) {$/
+infect	infect.cpp	/^void infect(ivec const &S, ivec const &I, Rates &r/
+ivec	defs.hpp	/^typedef vector<int> ivec;$/
+movement	movement.cpp	/^void movement(ivec const &N, Rates &rates, bvec co/
+pick	pick.cpp	/^int pick(dvec const &A) {$/
+pick_to	pick_to.cpp	/^int pick_to(ivec const &N, int const &x) {$/
+record_data	records.cpp	/^void record_data(Records &records, ivec const &S, /
+setup_params	setup_params.cpp	/^void setup_params(int argc, char *argv[]) {$/
+setup_popns	setup_popns.cpp	/^void setup_popns(ivec &S, ivec &I) {$/
+show_finished	details.cpp	/^void show_finished(void) {$/
+show_progress	details.cpp	/^void show_progress(double const t, int const itn) /
+show_recording	details.cpp	/^void show_recording(int const current_record, Rate/
+show_time	details.cpp	/^void show_time(double const t) {$/
+simulate	simulate.cpp	/^int simulate(Records &records) {$/
+sum	utils.hpp	/^T sum(vector<T> const &A) {$/
+update_nbhd	nbhd.cpp	/^void update_nbhd(bvec &update, int const x) {$/
+update_ring	update_ring.cpp	/^void update_ring(ivec const &I) {$/
+write	write.cpp	/^void write(const Records &records) {$/

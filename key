@@ -1,0 +1,50 @@
+# runs:	number of times to run simulation (50 is probably good)
+# icw:	how to setup initial conditions
+#		0) near DFE: S,I = K-1,1
+#		1) near EE: S,I = (d+e)/b, K-S*
+# icb:	G(0) in (0,1)
+# inf:	what type of infection to use
+#		0) density dependent
+#		1) frequency dependent
+# mt:	dispersal type
+#		0) nearest neighbour (torus)
+#		0) nearest neighbour (edges)
+#		1) global
+#		2) negative exponential
+# bias:	dispersal bias
+#		0) step at N_k=a
+#		1) biased *(1-N/c)
+#		2) very biased *max(1-N/K,0)
+#		3) diffusion
+# a:	migration bias parameter (where the step occurs)
+# T:	how long to run simulation for (usually 100 years)
+# recs:	no. of records to take,  either =T or 100
+# n:	use an n x n lattice for the simulation, note that runtime is O(n^2)
+# c:	glass ceiling carrying capacity
+# r:	intrinsic reproduction rate
+# d:	natural mortality rate
+# e:	disease induced mortality rate
+# m:	intrinsic dispersal rate
+# be,bw,bb:		background, within and between groups infection rate
+# vt:	vertical transmission probability
+# cb:	culltype: which groups
+#		0) none
+#		1) randomly cull p1 groups
+#		2) cull p1 groups in a block
+#		3) ring cull
+
+# cw:	what method to use within groups
+# 		0) none
+# 		1) continuous
+# 		2) annual
+# cp:	cull pulse time
+# cg:	cull pulse gap
+# t0:	time to start cull
+# cy:	number of years to cull
+# p1:	culling coverage
+# p2:	culling rate within groups
+# dc:	increase in death rate during culling
+# pb:	allow behaviour change during cull
+#
+# dbg:	level of details required
+# dist:	bitmask to give the distribution of I (+1) or N (+2), or the value of I (+4), before, during, and after a cull.

@@ -5,7 +5,7 @@
 
 ## Running
 The basic idea is to run `./SImodel ...` with the appropriate parameters. The easiest way to run this is to enter **GNU Octave** and run
-```Octave
+```octave
 P = std_pars()
 P.name = "d1"
 generate(d1)

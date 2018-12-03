@@ -1,8 +1,16 @@
 SHELL = /bin/bash
+UNAME := $(shell uname)
 #CXX = g++
 #CXXFLAGS = -ggdb -Wall -O2 -march=x86-64 #-pg
 #LIBS = -lgsl -lgslcblas #-lstdc++
-CXX = clang++
+ifeq ($(UNAME), Linux)
+	CXX = clang++-6.0
+else
+	CXX = clang++
+endif
+$(info Compiling on $(UNAME))
+
+
 CXXFLAGS = --std=c++17 -Wall -O2 -march=corei7 -I/opt/local/include #-pg
 #LIBS = -L/opt/local/lib -lgsl -lgslcblas #-lstdc++
 LIBS = -lgsl -lgslcblas #-lstdc++

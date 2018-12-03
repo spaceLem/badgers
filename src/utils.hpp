@@ -20,6 +20,18 @@ inline int iceil(T x) {
 	return static_cast<int>(ceil(x));
 }
 
+/*
+template <typename T>
+inline T clamp(T x, T xmin, T xmax) {
+	if (x < xmin)
+		return xmin;
+	else if (x > xmax)
+		return xmax;
+	else
+		return x;
+}
+*/
+
 // divide and set 0 if denom is 0
 template <typename S, typename T>
 double div0(S numer, T denom) {

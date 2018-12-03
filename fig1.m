@@ -10,30 +10,26 @@ endfunction
 function gen_data()
 	P = std_pars();
 	P.name = "d1";
-	P.n = 10;
-	P.kappa = 1;
-	P.cy = 10;
-	P.T = 30;
-	P.cb = 3;
-	P.p1 = 1;
-	P.p2 = 1;
 
-	tic; generate(P); toc;
+	%P.cb = P.cw = P.p1 = P.p2 = 0;
+	tic(); generate(P); toc()
 
-	load d1
-	save -7 ~/badger_data/fig1-data.mat d1
-	%delete d1
+	load(P.name)
+	save("-7", "~/badger_data/fig1-data.mat", "P", P.name)
+	%delete(P.name)
 endfunction
 
 
 function plot_data()
-	load ~/badger_data/fig1-data.mat
+	load ~/badger_data/fig1-data.mat % P d1
 
 	clf()
 	subplot(111)
 
 	graphs(d1, 5)
-	axis([-5 29 0 1])
+	xlabel("Time")
+	ylabel("")
+	axis([-5 25 0 0.7])
 	title("")
 
 	print -dpng gfx/Figure1.png

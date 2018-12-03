@@ -42,7 +42,7 @@ void record_data(Records &records, ivec const &S, ivec const &I, ivec const &N, 
 			div0(rates.rates[2] * num_groups, sum_S * sum_I), //  8 beta_eff
 			vert_r / num_groups,			//  9 vt
 			div0(sum_I, sum_N)				// 10 prevalence
-			//div0(infect_r, sum_N);		// incidence
+			//div0(infect_r, sum_N);		// nn incidence
 			});
 
 

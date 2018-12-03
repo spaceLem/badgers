@@ -13,12 +13,18 @@ function graphs(file=A, type=2, use_std_dev=1, annotate=2)
 
 recs = file.parameters.recs;
 runs = file.parameters.runs;
-T = file.parameters.T;
-t0 = file.parameters.t0;
-t1 = file.parameters.t1;
-c = file.parameters.c;
-bw = file.parameters.bw;
+T    = file.parameters.T;
+t0   = file.parameters.t0;
+t1   = file.parameters.t1;
+c    = file.parameters.c;
+r    = file.parameters.r;
+mu   = file.parameters.mu;
+bw   = file.parameters.bw;
 
+% calculate the disease free equilibrium
+Ndf = c * (1 - mu / r);
+
+% adjust time so that t=0 is the start of the cull
 t = (0:recs-1) * T / recs - t0;
 
 file_mu = mean(file.data, 3)';
@@ -78,9 +84,9 @@ case 2
 		 t, [G + Gv, G - Gv], "g-")
 
 	maxval = 1;
-	title_str = "Proportion of infected groups vs time";
-	ystr = "Proportion of infected groups";
-	lstr = {"Proportion of infected groups"};
+	title_str = "Proportion of infected groups (G) vs time";
+	ystr = "Proportion of infected groups (G)";
+	lstr = {"Proportion of infected groups (G)"};
 
 case 3
 	% populations S, I, N, with no error bars
@@ -98,16 +104,20 @@ case 4
 	maxval = 1;
 	title_str = "Global population numbers vs time";
 	ystr = "Global mean number";
-	lstr = {"Proportion of infected groups", "Infected (I) / c", "Effective transmission", "Dispersal"};
+	lstr = {"Proportion of infected groups (G)", "Infected (I) / c", "Effective transmission", "Dispersal"};
 
 case 5
-	% G, I, Heff and Deff, with no error bars
+	% G, I, and N, with no error bars
 	plot(t, [G I/c], "LineWidth", 2)
+	%plot(t, [G I/c], {"b-", "r-"}, "LineWidth", 2,
+		 %t, [G+Gv, (I+Iv)/c], {"b-", "r-"}, 
+		 %t, [G-Gv, (I-Iv)/c], {"b-", "r-"});
 
 	maxval = 1;
 	title_str = "Global population numbers vs time";
 	ystr = "Global mean number";
-	lstr = {"Proportion of infected groups", "Infected (I) / c"};
+	%lstr = {"Proportion of infected groups (G)", "Infected (I) / c", "N / c"};
+	lstr = {"Proportion of infected groups (G)", "Infected (I) / 20"};
 
 case 6
 	% show horizontal transmission
@@ -171,7 +181,7 @@ case 11
 	maxval = max([G; 0.2*infect; move]);
 	title_str = "Rates";
 	ystr = "Global mean proportion";
-	lstr = {"Proportion of infected groups", "Disease Transmission", "Dispersal"};
+	lstr = {"Proportion of infected groups (G)", "Disease Transmission", "Dispersal"};
 case 12
 	% G in and outside core
 	plot(t, [G0 G1 G2 G3], {"g-", "r-", "m-", "b-"}, "LineWidth", 2)
@@ -186,7 +196,7 @@ case 12
 	endif
 
 	maxval = 1;
-	title_str = "Proportion of infected groups vs time";
+	title_str = "Proportion of infected groups (G) vs time";
 	ystr = "G(t)";
 	lstr = {"core", "boundary1", "boundary2", "periphery"};
 case 13

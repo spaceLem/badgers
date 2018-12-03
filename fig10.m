@@ -11,20 +11,21 @@ function gen_data()
 	P = std_pars();
 
 	% parameters of interest
-	P.n = 20;
+	P.n = 10;
+	P.runs = 1000;
 	P.cb = 3; % turns on core + boundary!
 	P.p1 = 1.0;
-	P.p2 = 0.6;
-	par = "alpha";
-	vals = 0.3:0.2:1.1;
+	P.p2 = 1.0;
+	par = "kappa";
+	vals = [0.1, 0.5, 1.0];
 	nvals = length(vals);
 
 	% create fresh file, removing old one if necessary
 	save -7 ~/badger_data/fig10-data.mat P par nvals vals
 
 	for i = 1:nvals
-		P.alpha = vals(i);
-		P.name = sprintf("d%i", i); % di
+		P.kappa = vals(i);
+		P.name = sprintf("d10_%i", i); % di
 
 		generate(P);
 
@@ -40,22 +41,23 @@ function plot_data()
 
 	figure(1)
 	for i = 1:nvals
-		subplot(3,2,i)
+		subplot(2,2,i)
 
-		graphs(eval(sprintf("d%i", i)), 13)
+		graphs(eval(sprintf("d10_%i", i)), 13, 0)
 		legend off
-		title(sprintf("alpha = %i", vals(i)))
+		title(sprintf("kappa = %i", vals(i)))
 	endfor
-	print -dpng gfx/Figure10a.png
+	print -dpng gfx/Figure10A.png
 
 	figure(2)
 	for i = 1:nvals
-		subplot(3,2,i)
+		subplot(2,2,i)
 
-		graphs(eval(sprintf("d%i", i)), 12)
+		graphs(eval(sprintf("d10_%i", i)), 12, 0)
 		legend off
-		title(sprintf("alpha = %i", vals(i)))
+		title(sprintf("kappa = %i", vals(i)))
 	endfor
-	print -dpng gfx/Figure10b.png
+	print -dpng gfx/Figure10B.png
 endfunction
+
 

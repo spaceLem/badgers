@@ -10,10 +10,9 @@ function fig4(gen=0, nvals = [26, 26, 5])
 endfunction
 
 
-function gen_data(nvals);
+function gen_data(nvals)
 	P = std_pars();
-	P.T = 40;
-	P.recs = 40;
+	P.recs = P.T = 30;
 	
 	% parameters of interest
 	par = {"p1", "p2", "alpha"};
@@ -28,26 +27,26 @@ function gen_data(nvals);
 		P.p1 = vals{1}(i);
 		P.p2 = vals{2}(j);
 		P.alpha = vals{3}(k);
-		P.name = sprintf("d%i_%i_%i", i, j, k); % di_j_k
+		P.name = sprintf("d4_%i_%i_%i", i, j, k); % di_j_k
 
 		generate(P);
 
-		load(P.name);
-		save("-append", "-7", "~/badger_data/fig4-data.mat", P.name);
-		delete(P.name);
+		load(P.name)
+		save("-append", "-7", "~/badger_data/fig4-data.mat", P.name)
+		delete(P.name)
 	endfor; endfor; endfor
 
 	% control (p=0)
 	P.cb = P.cw = P.p1 = P.p2 = 0;
 	for k = 1:nvals(3)
 		eval(sprintf("P.%s = %i;", par{3}, vals{3}(k))); %P.a = vals{3}(k);
-		P.name = sprintf("d0_%i", k);
+		P.name = sprintf("d4_0_%i", k);
 
 		generate(P);
 
-		load(P.name);
-		save("-append", "-7", "~/badger_data/fig4-data.mat", P.name);
-		delete(P.name);
+		load(P.name)
+		save("-append", "-7", "~/badger_data/fig4-data.mat", P.name)
+		delete(P.name)
 	endfor
 endfunction
 
@@ -58,26 +57,20 @@ function summarise_data()
 	% t = -10:29
 	tidx = floor((P.t0 + P.cy) * P.recs / P.T);
 
-	Pi = G = N = Z = zeros(nvals);
+	Pi = G = N = zeros(nvals);
 
 	for k = 1:nvals(3)
-		data = eval(sprintf("d0_%i.data", k));
+		data = eval(sprintf("d4_0_%i.data", k));
 
 		Pi0 = mean(data, 3)(2, tidx);
 		G0  = mean(data, 3)(4, tidx);
 
 		for j = 1:nvals(2); for i = 1:nvals(1)
-			data = eval(sprintf("d%i_%i_%i.data", i, j, k));
+			data = eval(sprintf("d4_%i_%i_%i.data", i, j, k));
 
 			Pi(i,j,k) = mean(data, 3)(2, tidx) - Pi0;
 			G(i,j,k)  = mean(data, 3)(4, tidx) - G0;
 			N(i,j,k)  = mean(data, 3)(3, tidx);
-
-			if G(i,j,k) > 0
-				Z(i,j,k) = 1;
-			elseif N(i,j,k) > 2
-				Z(i,j,k) = 2;
-			end
 		endfor; endfor
 	endfor
 
@@ -89,22 +82,25 @@ function summarise_data()
 	[Xi Yi] = meshgrid(xi, yi);
 
 	for k = 1:nvals(3)
-		Gi{k} = interp2(X, Y, G(:,:,k)', Xi, Yi);
-		Ni{k} = interp2(X, Y, N(:,:,k)', Xi, Yi);
-		Zi{k} = 2*(Gi{k} <= 0) .* (Ni{k} > 2) + (Gi{k} > 0);
+		Gi(:,:,k) = interp2(X, Y, G(:,:,k)', Xi, Yi);
+		Ni(:,:,k) = interp2(X, Y, N(:,:,k)', Xi, Yi);
 	endfor
 
-	save -7 ~/badger_data/fig4-summary.mat G N Z Pi P par nvals vals Gi Ni Zi xi yi Xi Yi X Y
+	Zi = 2*(Gi <= 0) .* (Ni > 2 / P.n^2) + (Gi > 0);
+
+	save -7 ~/badger_data/fig4-summary.mat G N Pi P par nvals vals Gi Ni Zi xi yi Xi Yi X Y
 endfunction
 
 
 function plot_data()
-	load ~/badger_data/fig4-summary.mat %  G N Z Pi P par nvals vals Gi Ni Zi xi yi Xi Yi X Y
+	load ~/badger_data/fig4-summary.mat % G N Pi P par nvals vals Gi Ni Zi xi yi Xi Yi X Y
 
 	for k = 1:nvals(3)
 		subplot(2,3,k)
 
-		contourf(Xi, Yi, Zi{k}, [0 1 2])
+		%Zi{k} = 2*(Gi{k} <= 0) .* (Ni{k} > 2 / P.n^2) + (Gi{k} > 0);
+
+		contourf(Xi, Yi, Zi(:,:,k), [0 1 2])
 		colorbar off
 		xlabel("Coverage, p1")
 		ylabel("Culling rate, p2")

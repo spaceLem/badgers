@@ -9,7 +9,8 @@ int pick_to(ivec const &N, int const &x) {
 				 mt = P.mt;
 
 	int static y, group;
-	y = 0, group = 0;
+	y = 0;
+	group = 0;
 
 	double static tmp;
 
@@ -30,7 +31,7 @@ int pick_to(ivec const &N, int const &x) {
 
 		double z = tmp * gsl_rng_uniform(gen);
 
-		if (tmp == 0) {
+		if (tmp == 0.0) {
 			// check for incorrectly choosing movement
 			cout << "movement was allowed in group " << x/n << "," << x%n << " (" << x
 				<< ") when it shouldn't have been" << endl;
@@ -39,10 +40,11 @@ int pick_to(ivec const &N, int const &x) {
 			cout << "N = " << endl;
 			display(N, n);
 
-		} else if (z == 1) {
+		} else if (z == 1.0) {
 			// shouldn't happen, but just in case
 			cout << "RNG error during movement" << endl;
 			y = x;
+
 		} else {
 			for (group = 0; group < 4; ++group) {
 				if (z < direction[group]) {
